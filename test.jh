@@ -1,0 +1,50 @@
+entity Users {
+	dn String
+    sAMAccountName String
+    displayName String
+    mail String
+    title String
+    company String
+    sn String
+    givenName String
+    department String
+    mobile String
+}
+
+
+entity UserProfile {
+	profileId Long
+    profileName String
+}
+
+entity Sites {
+	dnSite String
+    completeDnSite String
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Groupes {
+	dnGroup String
+	completeDnGroup String
+}
+
+relationship ManyToMany {
+	Users{Groupes(dnGroup)} to Groupes{Users}
+}
+
+
+relationship ManyToMany {
+	Users{Sites(dnSite)} to Sites{Users}
+}
+
+relationship ManyToMany {
+	Users{UserProfile(profileId)} to UserProfile{Users}
+}
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except userProfile
+
